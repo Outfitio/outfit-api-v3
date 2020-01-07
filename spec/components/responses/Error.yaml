@@ -1,6 +1,0 @@
-description: Internal server error
-content:
-  text/plain:
-    schema:
-      type: string
-      example: Internal server error. Please contact Outfit.

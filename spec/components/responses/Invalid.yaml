@@ -1,8 +1,0 @@
-description: The request is invalid
-content:
-  text/plain:
-    schema:
-      type: string
-      example: >-
-        The request does not contain a personal access token in the expected
-        payload.

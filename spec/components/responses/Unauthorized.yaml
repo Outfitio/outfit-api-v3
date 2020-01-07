@@ -1,6 +1,0 @@
-description: Unauthorized request
-content:
-  text/plain:
-    schema:
-      type: string
-      example: Unable to authorize request.

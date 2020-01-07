@@ -1,8 +1,0 @@
-specFileName: swagger.yaml
-apiTitle: Outfit public api v3
-splitSpec: true
-codeSamples: false
-swaggerUI: true
-travis: true
-repo: Outfitio/outfit-api-v3
-oasVersion: 3.0.0
