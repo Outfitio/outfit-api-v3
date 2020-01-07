@@ -1,0 +1,25 @@
+openapi: 3.0.0
+info:
+  title: Outfit Public API
+  description: On-brand production at scale.
+  contact:
+    name: Outfit
+    email: tech@outfit.io
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+  version: 1.1.0
+servers:
+  - url: 'https://{subdomain}.outfit.io/api/v3'
+    description: Production environment
+    variables:
+      subdomain:
+        description: Subdomain used for account.
+        default: outfit
+tags:
+  - name: Authentication
+    description: >-
+      The session endpoint will establish an authenticated session between
+      customers and the Outfit Public API.
+  - name: Manage teams
+    description: Team management.

@@ -1,0 +1,61 @@
+post:
+  tags:
+    - Authentication
+  summary: Request a JWT token to authenticate user and account.
+  description: >-
+    Establish an authenticated session with the Outfit Public API. Use the
+    '/session' endpoint to request a JSON Web Token from Outfit. The token is
+    then used to authenticate the subsequent resource requests with `Bearer`
+    authentication.
+  parameters:
+    - name: AppId
+      in: header
+      description: Account AppId
+      required: false
+      style: simple
+      explode: false
+      schema:
+        type: string
+        format: string
+  requestBody:
+    description: >-
+      User email and personal access token. Personal access token is issued by
+      Outfit.
+    content:
+      application/json:
+        schema:
+          $ref: '#/components/schemas/Authenticate'
+        example:
+          email: john@outfit.io
+          token: 290f1ee-6c54-4b01-90e6-d701748f0851
+    required: true
+  responses:
+    '200':
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/jwt'
+    '400':
+      description: The request is invalid
+      content:
+        text/plain:
+          schema:
+            type: string
+            example: >-
+              The request does not contain a personal access token in the
+              expected payload.
+    '401':
+      description: Unauthorized request
+      content:
+        text/plain:
+          schema:
+            type: string
+            example: Unable to authorize request.
+    '500':
+      description: Internal server error
+      content:
+        text/plain:
+          schema:
+            type: string
+            example: Internal server error. Please contact Outfit.

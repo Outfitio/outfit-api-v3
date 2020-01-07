@@ -1,0 +1,6 @@
+description: JWT is expired
+content:
+  text/plain:
+    schema:
+      type: string
+      example: The specified JWT has expired and can no longer be used.

@@ -1,0 +1,22 @@
+title: Team object
+required:
+  - dsid
+  - name
+type: object
+properties:
+  id:
+    type: string
+    description: Team id used by Outfit.
+    format: uuid
+  dsid:
+    type: string
+    description: Team id issued by client directory service.
+    format: string
+    example: apac-southeast-marketing
+  name:
+    type: string
+    description: Team display name.
+    format: string
+    example: Marketing
+  meta:
+    type: object
