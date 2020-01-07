@@ -1,0 +1,307 @@
+openapi: 3.0.0
+info:
+  title: Outfit Public API
+  description: On-brand production at scale.
+  contact:
+    name: Outfit
+    email: tech@outfit.io
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+  version: 1.1.0
+servers:
+  - url: 'https://{subdomain}.outfit.io/api/v3'
+    description: Production environment
+    variables:
+      subdomain:
+        description: Subdomain used for account.
+        default: outfit
+tags:
+  - name: Authentication
+    description: The session endpoint will establish an authenticated session between customers and the Outfit Public API.
+  - name: Manage teams
+    description: Team management.
+paths:
+  /manage/teams:
+    get:
+      tags:
+        - Manage teams
+      summary: List all teams in the Outfit account.
+      description: Requires Bearer authorization with JSON web token.
+      parameters:
+        - name: AppId
+          in: header
+          description: Account AppId
+          required: false
+          style: simple
+          explode: false
+          schema:
+            type: string
+            format: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Teams'
+              example:
+                teams:
+                  - id: '808'
+                    dsid: 000-000
+                    name: Marketing
+                  - id: '809'
+                    dsid: 000-001
+                    name: Sales
+                  - id: '812'
+                    dsid: 000-007
+                    name: Human Resources
+        '500':
+          description: Internal server error
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Internal server error. Please contact Outfit.
+      security:
+        - BearerAuth:
+            - JSON Web Token
+  /manage/teams/sync:
+    post:
+      tags:
+        - Manage teams
+      summary: Perform a non-destructive sync on teams available in the Outfit account.
+      description: Requires Bearer authorization with JSON web token. This endpoint accepts a paylod of JSON data in an array.
+      parameters:
+        - name: AppId
+          in: header
+          description: Account AppId
+          required: false
+          style: simple
+          explode: false
+          schema:
+            type: string
+            format: string
+      requestBody:
+        description: An array of JSON objects that maps the client `dsid` with display `name` values.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Teams'
+            example:
+              teams:
+                - dsid: 000-000
+                  name: Marketing
+                - dsid: 000-001
+                  name: Sales
+                - dsid: 000-007
+                  name: Human Resources
+      responses:
+        '200':
+          description: ''
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: OK
+        '500':
+          description: Internal server error
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Internal server error. Please contact Outfit.
+      security:
+        - BearerAuth: []
+  /session:
+    post:
+      tags:
+        - Authentication
+      summary: Request a JWT token to authenticate user and account.
+      description: Establish an authenticated session with the Outfit Public API. Use the '/session' endpoint to request a JSON Web Token from Outfit. The token is then used to authenticate the subsequent resource requests with `Bearer` authentication.
+      parameters:
+        - name: AppId
+          in: header
+          description: Account AppId
+          required: false
+          style: simple
+          explode: false
+          schema:
+            type: string
+            format: string
+      requestBody:
+        description: User email and personal access token. Personal access token is issued by Outfit.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Authenticate'
+            example:
+              email: john@outfit.io
+              token: 290f1ee-6c54-4b01-90e6-d701748f0851
+        required: true
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/jwt'
+        '400':
+          description: The request is invalid
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: The request does not contain a personal access token in the expected payload.
+        '401':
+          description: Unauthorized request
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Unable to authorize request.
+        '500':
+          description: Internal server error
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: Internal server error. Please contact Outfit.
+components:
+  schemas:
+    Authenticate:
+      title: Authenticate
+      required:
+        - email
+        - token
+      type: object
+      properties:
+        email:
+          type: string
+          description: An enabled Outfit account user with 'Admin' role type.
+          format: email
+        token:
+          type: string
+          description: Personal Access Token issued by Outfit.
+          format: uuid
+    jwt:
+      title: jwt
+      type: object
+      properties:
+        jwt:
+          type: string
+          description: Outfit issued JSON Web Token.
+          format: uuid
+    Team:
+      title: Team object
+      required:
+        - dsid
+        - name
+      type: object
+      properties:
+        id:
+          type: string
+          description: Team id used by Outfit.
+          format: uuid
+        dsid:
+          type: string
+          description: Team id issued by client directory service.
+          format: string
+          example: apac-southeast-marketing
+        name:
+          type: string
+          description: Team display name.
+          format: string
+          example: Marketing
+        meta:
+          type: object
+    Teams:
+      title: Teams array
+      required:
+        - team
+      type: object
+      properties:
+        teams:
+          type: array
+          items:
+            $ref: '#/components/schemas/Team'
+      description: Array containing JSON objects of type `team`.
+  responses:
+    Authorized:
+      description: Success
+      content:
+        application/json:
+          schema:
+            title: jwt
+            type: object
+            properties:
+              jwt:
+                type: string
+                description: Outfit issued JSON Web Token.
+                format: uuid
+    Error:
+      description: Internal server error
+      content:
+        text/plain:
+          schema:
+            type: string
+            example: Internal server error. Please contact Outfit.
+    Expired:
+      description: JWT is expired
+      content:
+        text/plain:
+          schema:
+            type: string
+            example: The specified JWT has expired and can no longer be used.
+    Invalid:
+      description: The request is invalid
+      content:
+        text/plain:
+          schema:
+            type: string
+            example: The request does not contain a personal access token in the expected payload.
+    Teams:
+      description: Success
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Teams'
+          example:
+            teams:
+              - id: '808'
+                dsid: 000-000
+                name: Marketing
+              - id: '809'
+                dsid: 000-001
+                name: Sales
+              - id: '812'
+                dsid: 000-007
+                name: Human Resources
+    Unauthorized:
+      description: Unauthorized request
+      content:
+        text/plain:
+          schema:
+            type: string
+            example: Unable to authorize request.
+  parameters:
+    AppIdParam:
+      name: AppId
+      in: header
+      description: Account AppId
+      required: false
+      style: simple
+      explode: false
+      schema:
+        type: string
+        format: string
+  examples:
+    Authenticate:
+      value:
+        email: john@outfit.io
+        token: 290f1ee-6c54-4b01-90e6-d701748f0851
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
