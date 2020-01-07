@@ -2,3 +2,10 @@ theme:
   colors:
     primary:
       main: '#32329f'
+typography:
+  fontFamily: 'Noto Sans, sans-serif'
+  lineHeight: '20px'
+  headings:
+    fontFamily: 'Open Sans, sans-serif'
+    fontWeight: '700'
+    lineHeight: '28px'
