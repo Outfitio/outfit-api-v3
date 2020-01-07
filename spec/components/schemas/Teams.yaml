@@ -1,0 +1,10 @@
+title: Teams array
+required:
+  - team
+type: object
+properties:
+  teams:
+    type: array
+    items:
+      $ref: '#/components/schemas/Team'
+description: Array containing JSON objects of type `team`.

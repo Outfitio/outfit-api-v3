@@ -1,0 +1,49 @@
+post:
+  tags:
+    - Manage teams
+  summary: Perform a non-destructive sync on teams available in the Outfit account.
+  description: >-
+    Requires Bearer authorization with JSON web token. This endpoint accepts a
+    paylod of JSON data in an array.
+  parameters:
+    - name: AppId
+      in: header
+      description: Account AppId
+      required: false
+      style: simple
+      explode: false
+      schema:
+        type: string
+        format: string
+  requestBody:
+    description: >-
+      An array of JSON objects that maps the client `dsid` with display `name`
+      values.
+    content:
+      application/json:
+        schema:
+          $ref: '#/components/schemas/Teams'
+        example:
+          teams:
+            - dsid: 000-000
+              name: Marketing
+            - dsid: 000-001
+              name: Sales
+            - dsid: 000-007
+              name: Human Resources
+  responses:
+    '200':
+      content:
+        text/plain:
+          schema:
+            type: string
+            example: OK
+    '500':
+      description: Internal server error
+      content:
+        text/plain:
+          schema:
+            type: string
+            example: Internal server error. Please contact Outfit.
+  security:
+    - BearerAuth: []

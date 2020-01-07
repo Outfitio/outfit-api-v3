@@ -1,0 +1,11 @@
+description: Success
+content:
+  application/json:
+    schema:
+      title: jwt
+      type: object
+      properties:
+        jwt:
+          type: string
+          description: Outfit issued JSON Web Token.
+          format: uuid
