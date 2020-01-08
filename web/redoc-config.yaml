@@ -2,10 +2,10 @@ theme:
   colors:
     primary:
       main: '#32329f'
-typography:
-  fontFamily: 'Noto Sans'
-  lineHeight: '20px'
-  headings:
-    fontFamily: 'Open Sans'
-    fontWeight: '700'
-    lineHeight: '28px'
+  typography:
+    fontFamily: 'Noto Sans'
+    lineHeight: '20px'
+    headings:
+      fontFamily: 'Open Sans'
+      fontWeight: '700'
+      lineHeight: '28px'
