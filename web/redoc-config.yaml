@@ -3,9 +3,9 @@ theme:
     primary:
       main: '#32329f'
 typography:
-  fontFamily: 'Noto Sans, sans-serif'
+  fontFamily: 'Noto Sans'
   lineHeight: '20px'
   headings:
-    fontFamily: 'Open Sans, sans-serif'
+    fontFamily: 'Open Sans'
     fontWeight: '700'
     lineHeight: '28px'
