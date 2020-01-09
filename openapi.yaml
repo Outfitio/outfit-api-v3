@@ -8,19 +8,19 @@ info:
   license:
     name: Apache 2.0
     url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
-  version: 1.1.0
+  version: 3.1.0
 servers:
   - url: 'https://{subdomain}.outfit.io/api/v3'
-    description: Production environment
+    description: ''
     variables:
       subdomain:
         description: Subdomain used for account.
         default: outfit
 tags:
-  - name: Authentication
-    description: The session endpoint will establish an authenticated session between customers and the Outfit Public API.
+  - name: Session
+    description: Begin your API session here. Use the session endpoint to authenticate an API session with the Outfit Public API. Outfit API sessions are valid for 8 hours.
   - name: Manage teams
-    description: Team management.
+    description: Create new teams and sync team metadata with Outfit.
 paths:
   /manage/teams:
     get:
@@ -116,7 +116,7 @@ paths:
   /session:
     post:
       tags:
-        - Authentication
+        - Session
       summary: Request a JWT token to authenticate user and account.
       description: Establish an authenticated session with the Outfit Public API. Use the '/session' endpoint to request a JSON Web Token from Outfit. The token is then used to authenticate the subsequent resource requests with `Bearer` authentication.
       parameters:
@@ -170,7 +170,7 @@ paths:
 components:
   schemas:
     Authenticate:
-      title: Authenticate
+      title: Session
       required:
         - email
         - token
@@ -185,7 +185,7 @@ components:
           description: Personal Access Token issued by Outfit.
           format: uuid
     jwt:
-      title: jwt
+      title: JSON Web Token
       type: object
       properties:
         jwt:
