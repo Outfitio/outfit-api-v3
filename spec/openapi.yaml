@@ -8,18 +8,19 @@ info:
   license:
     name: Apache 2.0
     url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
-  version: 1.1.0
+  version: 3.1.0
 servers:
   - url: 'https://{subdomain}.outfit.io/api/v3'
-    description: Production environment
+    description: ''
     variables:
       subdomain:
         description: Subdomain used for account.
         default: outfit
 tags:
-  - name: Authentication
+  - name: Session
     description: >-
-      The session endpoint will establish an authenticated session between
-      customers and the Outfit Public API.
+      Begin your API session here. Use the session endpoint to authenticate an
+      API session with the Outfit Public API. Outfit API sessions are valid for
+      8 hours.
   - name: Manage teams
-    description: Team management.
+    description: Create new teams and sync team metadata with Outfit.

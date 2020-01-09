@@ -1,6 +1,6 @@
 post:
   tags:
-    - Authentication
+    - Session
   summary: Request a JWT token to authenticate user and account.
   description: >-
     Establish an authenticated session with the Outfit Public API. Use the

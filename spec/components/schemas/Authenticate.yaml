@@ -1,4 +1,4 @@
-title: Authenticate
+title: Session
 required:
   - email
   - token

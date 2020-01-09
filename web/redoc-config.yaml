@@ -3,7 +3,8 @@ theme:
     primary:
       main: '#32329f'
   typography:
-    fontFamily: 'Noto Sans'
+    fontFamily: 'Noto Sans, sans-serif'
+    fontSize: "14px"
     lineHeight: '20px'
     headings:
       fontFamily: 'Open Sans'

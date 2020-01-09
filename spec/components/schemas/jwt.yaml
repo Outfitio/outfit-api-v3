@@ -1,4 +1,4 @@
-title: jwt
+title: JSON Web Token
 type: object
 properties:
   jwt:
